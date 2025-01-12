@@ -40,7 +40,6 @@ RUN if id -u ${USER_UID} > /dev/null 2>&1; then \
 
 # Set working directory and switch to the new user
 USER ${USER_NAME}
-RUN git clone https://github.com/JasinskiRafal/raj-config-setup.git ~/.config/nvim
 
 # Default command
 CMD ["/bin/bash"]
