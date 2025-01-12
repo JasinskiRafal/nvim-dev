@@ -1,23 +1,23 @@
-CLEAN_COMMAND := docker container prune
+DEV_IMAGE := dev-image
+DEV_CONTAINER := dev-container
 
-image-clean:
-	$(CLEAN_COMMAND)
+env-clean:
+	docker container prune
 
-BUILD_COMMAND := docker build --build-arg GID=$(shell id -g) -t dev-container .
+BUILD_COMMAND := docker build --build-arg USER_UID=$(shell id -u) --build-arg USER_GID=$(shell id -g) -t $(DEV_CONTAINER) .
 
-image-build: image-clean
+env-build: env-clean
 	$(BUILD_COMMAND)
 
-image-build-no-cache:
+env-build-no-cache:
 	$(BUILD_COMMAND) --no-cache
 
-START_COMMAND := docker run -d -v $(shell pwd):/workspace --name dev-machine dev-container nvim
+env-start: env-build
+	docker run -d -v $(shell pwd):/workspace:rw --name $(DEV_CONTAINER) $(DEV_CONTAINER) tail -f /dev/null
 
-image-start: image-build
-	$(START_COMMAND)
+env-stop:
+	docker container kill $(DEV_CONTAINER)
 
-CONNECT_COMMAND := docker exec -it -e "TERM=xterm-256color" dev-machine /bin/bash
-image-connect:
-	$(CONNECT_COMMAND)
-
+env-connect:
+	docker exec -it -e "TERM=xterm-256color" -w /workspace $(DEV_CONTAINER) /bin/bash
 
