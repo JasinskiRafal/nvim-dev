@@ -4,7 +4,7 @@ FROM ${BASE_IMAGE}
 
 # install packages
 RUN apt update && apt upgrade
-RUN apt install -y python3-venv build-essential cmake gettext luarocks unzip wget curl dpkg git
+RUN apt install -y ripgrep fd-find python3-venv build-essential cmake gettext luarocks unzip wget curl dpkg git
 
 RUN wget -O /tmp/lazygit.tar.gz https://github.com/jesseduffield/lazygit/releases/download/v0.44.1/lazygit_0.44.1_Linux_x86_64.tar.gz
 RUN tar -xf /tmp/lazygit.tar.gz -C /tmp
@@ -19,12 +19,10 @@ RUN make -C /tmp/neovim install
 RUN rm -rf /tmp/neovim
 
 # create new user and group
-ARG GID
-RUN groupadd --force --gid ${GID} devcontainer
+RUN groupadd devcontainer
 RUN useradd --create-home --groups devcontainer,root rafalj
 
 # log in as the created user and use it for development
 USER rafalj
 RUN git clone https://github.com/JasinskiRafal/raj-config-setup.git ~/.config/nvim
-RUN nvim --headless -c 'qa'
 
