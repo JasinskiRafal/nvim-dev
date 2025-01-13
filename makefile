@@ -24,7 +24,7 @@ env-start: env-build
 		--name $(DEV_CONTAINER) $(DEV_CONTAINER) \
 		tail -f /dev/null && \
 	docker exec -w /home/rafalj $(DEV_CONTAINER) \
-		git clone git@github.com:JasinskiRafal/raj-config-setup.git .config/nvim
+		git clone https://github.com/JasinskiRafal/raj-config-setup.git .config/nvim
 
 
 env-stop:
