@@ -1,0 +1,16 @@
+services:
+  devcontainer:
+    image: nvim-dev:latest
+    hostname: dev-cntnr
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - USER_GID=$USER_GID
+        - USER_UID=$USER_UID
+    volumes:
+      - ${HOME}/workspace:/workspace
+      - ${HOME}/.ssh:/home/rafalj/.ssh:ro
+    working_dir: /workspace
+    environment:
+      - TERM=xterm-256color
