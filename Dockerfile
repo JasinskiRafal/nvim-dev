@@ -31,12 +31,12 @@ RUN if id -u ${USER_UID} > /dev/null 2>&1; then \
         echo "User with UID ${USER_UID} already exists, deleting..."; \
         userdel -r $(getent passwd ${USER_UID} | cut -d: -f1) || true; \
     fi && \
-    useradd --uid ${USER_UID} --gid ${USER_GID} --create-home dev
+    useradd --uid ${USER_UID} --gid ${USER_GID} --create-home rafalj
 
 # Set working directory and switch to the new user
-USER dev
+USER rafalj
 
-COPY config/ /home/dev/.config/nvim
+COPY config/ /home/rafalj/.config/nvim
 RUN nvim --headless -c "Lazy! sync" -c qa
 RUN nvim --headless -c "TSInstall all" -c qa
 RUN nvim --headless -c "MasonToolsInstallSync" -c qa
