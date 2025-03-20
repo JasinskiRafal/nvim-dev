@@ -36,7 +36,7 @@ RUN if id -u ${USER_UID} > /dev/null 2>&1; then \
 # Set working directory and switch to the new user
 USER dev
 
-RUN git clone https://github.com/JasinskiRafal/raj-config-setup.git /home/rafalj/.config/nvim
+COPY config/ /home/dev/.config/nvim
 RUN nvim --headless -c "Lazy! sync" -c qa
 RUN nvim --headless -c "TSInstall all" -c qa
 RUN nvim --headless -c "MasonToolsInstallSync" -c qa

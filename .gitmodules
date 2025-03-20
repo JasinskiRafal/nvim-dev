@@ -1,0 +1,6 @@
+[submodule "raj-config-setup"]
+	path = raj-config-setup
+	url = https://github.com/JasinskiRafal/raj-config-setup.git
+[submodule "config"]
+	path = config
+	url = https://github.com/JasinskiRafal/raj-config-setup.git
