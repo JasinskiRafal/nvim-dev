@@ -33,10 +33,12 @@ RUN if id -u ${USER_UID} > /dev/null 2>&1; then \
     fi && \
     useradd --uid ${USER_UID} --gid ${USER_GID} --create-home rafalj
 
-# Set working directory and switch to the new user
-USER rafalj
 
 COPY config/ /home/rafalj/.config/nvim
+RUN chown rafalj /home/rafalj/.config
+
+# Set working directory and switch to the new user
+USER rafalj
 RUN nvim --headless -c "Lazy! sync" -c qa
 RUN nvim --headless -c "TSInstall all" -c qa
 RUN nvim --headless -c "MasonToolsInstallSync" -c qa
